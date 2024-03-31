@@ -41,8 +41,7 @@
 ![image](pic/2.5.Fix.png)
 
 ## 2.6. Подключение к удаленному репозиторию
-![image]()
-![image]()
+![image](pic/2.6Connect.png)
 
 ## 2.7. Ветвление
 ![image]()
