@@ -29,7 +29,7 @@
 ![image](pic/1Install.png)
 
 ## 2.2. Настройка
-![image](pic/2Set.png)
+![image](pic/2.2Set.png)
 
 ## 2.3. Создание нового репозитория
 ![image](pic/2.3Create.png)
