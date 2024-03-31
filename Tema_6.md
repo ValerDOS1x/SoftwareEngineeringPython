@@ -26,18 +26,10 @@
 начальных данных.
 
 ```python
-bills = [8734, 2345, 8201, 6621, 9999, 1234, 5678, 8201, 8888, 4321, 3365, 1478, 9865, 5555,
-         7777, 9998, 1111, 2222, 3333, 4444, 5556, 6666, 5410, 7778, 8889, 4445, 1439, 9604,
-         8201, 3365, 7502, 3016, 4928, 5837, 8201, 2643, 5017, 9682, 8530, 3250, 7193, 9051,
-         4506, 1987, 3365, 5410, 7168, 7777, 9865, 5678, 8201, 4445, 3016, 4506, 4506]
-
-bills_count = len(bills)
-different_guests = len(set(bills))
-frequent_guest = max(bills, key=bills.count)
-
-print(f'Количество чеков: {bills_count}\n'
-      f'Число уникальных гостей: {different_guests}\n'
-      f'Самый частый гость: {frequent_guest}')
+numbers = input('Введите числа через пробел: ')
+lst = numbers.split()
+tpl = tuple(lst)
+print(lst, tpl, sep='\n')
 ```
 
 ### Результат
@@ -63,19 +55,23 @@ print(f'Количество чеков: {bills_count}\n'
 (2, 4, 6, 6, 4, 2)
 
 ```python
-results = [10.2, 14.8, 19.3, 22.7, 12.5, 33.1, 38.9, 21.6, 26.4, 17.1, 30.2, 35.7, 16.9,
-           27.8, 24.5, 16.3, 18.7, 31.9, 12.9, 37.4]
+tuples = ['(1, 2, 3), 1)', '(1, 2, 3, 1, 2, 3, 4, 5, 2, 3, 4, 2, 4, 2), 3)', '(2, 4, 6, 6, 4, 2), 9)']
 
-results.sort()
-best_three = results[-3:]
-worst_three = results[:3]
-from_ten = results
 
-print(
-    f'Топ-3 лучших результата: {best_three}\n'
-    f'Топ-3 худших результата: {worst_three}\n'
-    f'Все результаты начиная с 10-ти: {from_ten}'
-    )
+def remove_element(tpl, el):
+    lst = list(tpl)
+    if el in lst:
+        lst.remove(el)
+        return tuple(lst)
+    else:
+        return tpl
+
+
+for tple in tuples:
+    tpl = tuple(map(int, tple[:-4].strip('()').split(',')))
+    element = int(tpl[-2:-1][0])
+    new_tuple = remove_element(tpl, element)
+    print(new_tuple)
 ```
 
 ### Результат
@@ -96,24 +92,22 @@ print(
 эти значения нужно вывести в порядке возрастания ключа.
 
 ```python
-from math import sqrt
-
-list = [[12, 25, 3, 48, 71], [5, 18, 40, 62, 98], [4, 21, 37, 56, 84]]
-max_triangle = []
-min_triangle = []
+nums = input('Нажмите ладонью на numpad один раз\n')
 
 
-def count_area(a, b, c):
-    p = (a + b + c) / 2
-    s = sqrt(p * (p - a) * (p - b) * (p - c))
-    return s
+def count_numbers(string):
+    num_freq = {}
+
+    for i in string:
+        i = int(i)
+        num_freq[i] = num_freq.get(i, 0) + 1
+
+    sorted_num_freq = sorted(num_freq.items(), key=lambda item: item[1])
+    top_three = dict(sorted(sorted_num_freq[-3:]))
+    return top_three
 
 
-for partOfList in list:
-    max_triangle.append(max(partOfList))
-    min_triangle.append(min(partOfList))
-
-print(f'S наибольшего равна {count_area(*max_triangle)}\nS наименьшего равна {count_area(*min_triangle)}')
+print(count_numbers(nums))
 ```
 
   ### Результат
@@ -142,20 +136,22 @@ print(f'S наибольшего равна {count_area(*max_triangle)}\nS на�
 (8, 5, 1, 2, 9)
   
 ```python
-rating = [
-    [2, 3, 4, 5, 3, 4, 5, 2, 2, 5, 3, 4, 3, 5, 4],
-    [4, 2, 3, 5, 3, 5, 4, 2, 2, 5, 4, 3, 5, 3, 4],
-    [5, 4, 3, 3, 4, 3, 3, 5, 5, 3, 3, 3, 3, 4, 4]
-]
+tuples = ['(1, 2, 3), 8)', '(1, 8, 3, 4, 8, 8, 9, 2), 8)', '(1, 2, 8, 5, 1, 2, 9), 8)']
 
 
-def correction_grades(grades):
-    new_grades = [4 if i == 3 else i for i in grades if i != 2]
-    print(f'Исправленные оценки:', *new_grades, sep='\n')
+def find_element(tple, element):
+    if tple.count(element) > 0:
+        start_index = tple.index(element)
+        end_index = tple.index(element, start_index + 1) if tple.count(element) > 1 else ()
+        return tple[start_index:end_index + 1] if end_index != () else tple[start_index:]
+    else:
+        return ()
 
-
-if __name__ == '__main__':
-    correction_grades(rating)
+for tpl in tuples:
+    tple = tuple(map(int, tpl[1:-4].strip('()').split(',')))
+    element = int(tpl[-2])
+    new_tuple = find_element(tple, element)
+    print(new_tuple)
 ```
 
 ### Результат
@@ -168,19 +164,20 @@ if __name__ == '__main__':
 минимум три теста для проверки работоспособности вашей задачи
   
 ```python
-lists = [[1, 1, 3, 3, 1], [5, 5, 5, 5, 5, 5, 5], [2, 2, 1, 2, 2, 5, 6, 7, 1, 3, 2, 2]]
+# В магазине продаются яблоки разных сортов.
+# На складе имеется информация о количестве яблок каждого сорта,
+# и их средней цене. Необходимо посчитать общую стоимость всех яблок на складе.
 
+apples_info = [('Голден', 100), ('Сезонные', 50), ('Медовые', 75)] # Тип яблока и кол-во на складе
+apples_prices = {'Голден': 127, 'Сезонные': 79, 'Медовые': 98} # Тип яблока и средняя цена
 
-def convert_to_set(list, setl):
-    for i in range(len(list)):
-        if list[:i + 1].count(list[i]) != 1:
-            setl.add(str(list[i]) * list[:i + 1].count(list[i]))
-    return setl
+total_cost = 0
 
+for apple_type, counts in apples_info:
+    apple_price = apples_prices[apple_type]
+    total_cost += counts * apple_price
 
-for l in lists:
-    setl = set(l)
-    print(convert_to_set(l, setl))
+print(f"Общая стоимость всех яблок на складе: {total_cost} рублей.")
 ```
 
 ### Результат
