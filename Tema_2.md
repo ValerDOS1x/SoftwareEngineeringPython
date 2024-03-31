@@ -90,13 +90,13 @@ print(f"Сегодня день {day}, месяц {month}, год {year}", end='
 ### В предложении 'Hello World' вставьте 'my' между двумя словами. Выведите полученное предложение в консоль в одну строку. Программа должна занимать не более двух строк редактора кода.
 
 ```python
-line = "Hello World"
-print(line[:5], 'my', line[6:], sep=' ')
+stroka = 'Hello World';
+print(stroka[0:5], "my", stroka[6:11]);
 ```
 
 ### Результат
 
-![Меню](https://github.com/golonr1na/Software_Engineering/blob/Тема_2/pictures/sr6.png)
+![image](pic/6.png)
 
 ### Выводы
 
