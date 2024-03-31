@@ -16,20 +16,41 @@
 - к.э.н., доцент Панов М.А.
 
 ## Самостоятельная работа №1
-При создании сайта у вас возникла потребность обрабатывать
-данные пользователя в странной форме, а потом переводить их в
-нужные вам форматы. Вы хотите принимать от пользователя
-последовательность чисел, разделенных пробелом, а после
-переформатировать эти данные в список и кортеж. Реализуйте вашу
-задумку. Для получения начальных данных используйте input().
-Результатом программы будет выведенный список и кортеж из
-начальных данных.
+Найдите в интернете любую статью (объем статьи не менее 200
+слов), скопируйте ее содержимое в файл и напишите программу,
+которая считает количество слов в текстовом файле и определит
+самое часто встречающееся слово. Результатом выполнения задачи
+будет: скриншот файла со статьей, листинг кода, и вывод в консоль,
+в котором будет указана вся необходимая информация
 
 ```python
-numbers = input('Введите числа через пробел: ')
-lst = numbers.split()
-tpl = tuple(lst)
-print(lst, tpl, sep='\n')
+import re
+
+file = open('file.txt', 'r', encoding='utf-8-sig')
+words = file.read().split()
+stopwords = ['в', 'на', 'и', 'с', 'к', 'а']
+print(f'Длина статьи: {len(words)} слов.')
+
+
+def clean_text(words, stopwords):
+    words = [re.sub(r'[,()."—:«»]', '', i) for i in words if i not in stopwords and len(i) > 1]
+    return words
+
+
+def find_most_frequent(words):
+    words = clean_text(words, stopwords)
+    num_freq = {}
+    for word in words:
+        num_freq[word] = num_freq.get(word, 0) + 1
+    sorted_num_freq = sorted(num_freq.items(), key=lambda item: item[1])
+    top = sorted_num_freq[-1]
+    return top
+
+
+res = find_most_frequent(words)
+print(f'Самое встречающееся слово: "{res[0]}". Встречается {res[1]} раз.')
+
+file.close()
 ```
 
 ### Результат
@@ -37,41 +58,49 @@ print(lst, tpl, sep='\n')
 ![image](img/11.png)
   
 ## Самостоятельная работа №2
-Николай знает, что кортежи являются неизменяемыми, но он очень
-упрямый и всегда хочет доказать, что он прав. Студент решил
-создать функцию, которая будет удалять первое появление
-определенного элемента из кортежа по значению и возвращать
-кортеж без него. Попробуйте повторить шедевр не признающего
-авторитеты начинающего программиста. Но учтите, что Николай не
-всегда уверен в наличии элемента в кортеже (в этом случае кортеж
-вернется функцией в исходном виде).
-Входные данные:
-(1, 2, 3), 1)
-(1, 2, 3, 1, 2, 3, 4, 5, 2, 3, 4, 2, 4, 2), 3)
-(2, 4, 6, 6, 4, 2), 9)
-Ожидаемый результат:
-(2, 3)
-(1, 2, 1, 2, 3, 4, 5, 2, 3, 4, 2, 4, 2)
-(2, 4, 6, 6, 4, 2)
+У вас появилась потребность в ведении книги расходов, посмотрев
+все существующие варианты вы пришли к выводу что вас ничего не
+устраивает и нужно все делать самому. Напишите программу для
+учета расходов. Программа должна позволять вводить информацию
+о расходах, сохранять ее в файл и выводить существующие данные в
+консоль. Ввод информации происходит через консоль. Результатом
+выполнения задачи будет: скриншот файла с учетом расходов,
+листинг кода, и вывод в консоль, с демонстрацией
+работоспособности программы
 
 ```python
-tuples = ['(1, 2, 3), 1)', '(1, 2, 3, 1, 2, 3, 4, 5, 2, 3, 4, 2, 4, 2), 3)', '(2, 4, 6, 6, 4, 2), 9)']
+import csv
 
+def record_expenses(expenses):
+    date = input('Введите дату: ')
+    category = input('Введите категорию: ')
+    amount = float(input('Введите сумму: '))
+    expenses.append({'date': date, 'category': category, 'amount': amount})
+    with open('expenses.csv', 'a', newline='') as file:
+        fieldnames = ['date', 'category', 'amount']
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+        if file.tell() == 0:
+            writer.writeheader()
+        writer.writerow(expenses[-1])
 
-def remove_element(tpl, el):
-    lst = list(tpl)
-    if el in lst:
-        lst.remove(el)
-        return tuple(lst)
-    else:
-        return tpl
+def view_expenses(expenses):
+    with open('expenses.csv', 'r', newline='') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            print(f"{row['date']}, {row['category']}, {row['amount']}")
 
+expenses = []
 
-for tple in tuples:
-    tpl = tuple(map(int, tple[:-4].strip('()').split(',')))
-    element = int(tpl[-2:-1][0])
-    new_tuple = remove_element(tpl, element)
-    print(new_tuple)
+while True:
+    print('1. Добавить запись')
+    print('2. Просмотреть записи')
+    choice = int(input('Введите номер действия: '))
+
+    if choice == 1:
+        record_expenses(expenses)
+    elif choice == 2:
+        view_expenses(expenses)
+        break
 ```
 
 ### Результат
@@ -79,35 +108,39 @@ for tple in tuples:
 ![image](img/12.png)
   
 ## Самостоятельная работа №3
-Ребята поспорили кто из них одним нажатием на numpad наберет
-больше повторяющихся цифр, но не понимают, как узнать
-победителя. Вам им нужно в этом помочь. Дана строка в виде
-случайной последовательности чисел от 0 до 9 (длина строки
-минимум 15 символов). Требуется создать словарь, который в
-качестве ключей будет принимать данные числа (т. е. ключи будут
-типом int), а в качестве значений – количество этих чисел в
-имеющейся последовательности. Для построения словаря создайте
-функцию, принимающую строку из цифр. Функция должна
-возвратить словарь из 3-х самых часто встречаемых чисел, также
-эти значения нужно вывести в порядке возрастания ключа.
+Имеется файл input.txt с текстом на латинице. Напишите программу,
+которая выводит следующую статистику по тексту: количество букв
+латинского алфавита; число слов; число строк.
+• Текст в файле:
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+• Ожидаемый результат:
+Input file contains:
+108 letters
+20 words
+4 lines
 
 ```python
-nums = input('Нажмите ладонью на numpad один раз\n')
+import re
 
+file = open('file2.txt', 'r', encoding='utf-8-sig')
 
-def count_numbers(string):
-    num_freq = {}
+number_of_words = 0
+number_of_lines = 0
+number_of_characters = 0
 
-    for i in string:
-        i = int(i)
-        num_freq[i] = num_freq.get(i, 0) + 1
+for string in file:
+    number_of_words += len(string.split())
+    number_of_lines += 1
+    for letter in string:
+        number_of_characters += 1 if re.match(r'[a-zA-Z]+', letter) else 0
 
-    sorted_num_freq = sorted(num_freq.items(), key=lambda item: item[1])
-    top_three = dict(sorted(sorted_num_freq[-3:]))
-    return top_three
+print('Input file contains:', f'{number_of_characters} letters', f'{number_of_words} words', f'{number_of_lines} lines',
+      sep='\n')
 
-
-print(count_numbers(nums))
+file.close()
 ```
 
   ### Результат
@@ -115,43 +148,46 @@ print(count_numbers(nums))
 ![image](img/13.png)
   
 ## Самостоятельная работа №4
-Ваш хороший друг владеет офисом со входом по электронным
-картам, ему нужно чтобы вы написали программу, которая
-показывала в каком порядке сотрудники входили и выходили из
-офиса. Определение сотрудника происходит по id. Напишите
-функцию, которая на вход принимает кортеж и случайный элемент
-(id), его можно придумать самостоятельно. Требуется вернуть
-новый кортеж, начинающийся с первого появления элемента в нем и
-заканчивающийся вторым его появлением включительно.
-Если элемента нет вовсе – вернуть пустой кортеж.
-Если элемент встречается только один раз, то вернуть кортеж,
-который начинается с него и идет до конца исходного.
-Входные данные:
-(1, 2, 3), 8)
-(1, 8, 3, 4, 8, 8, 9, 2), 8)
-(1, 2, 8, 5, 1, 2, 9), 8)
-Ожидаемый результат:
-()
-(8, 3, 4, 8)
-(8, 5, 1, 2, 9)
+Напишите программу, которая получает на вход предложение,
+выводит его в терминал, заменяя все запрещенные слова
+звездочками * (количество звездочек равно количеству букв в
+слове). Запрещенные слова, разделенные символом пробела,
+хранятся в текстовом файле input.txt. Все слова в этом файле
+записаны в нижнем регистре. Программа должна заменить
+запрещенные слова, где бы они ни встречались, даже в середине
+другого слова. Замена производится независимо от регистра: если
+файл input.txt содержит запрещенное слово exam, то слова exam,
+Exam, ExaM, EXAM и exAm должны быть заменены на ****.
+• Запрещенные слова:
+hello email python the exam wor is
+• Предложение для проверки:
+Hello, world! Python IS the programming language of thE future. My
+EMAIL is....
+PYTHON is awesome!!!!
+• Ожидаемый результат:
+*****, ***ld! ****** ** *** programming language of *** future. My
+***** **....
+****** ** awesome!!!!
   
 ```python
-tuples = ['(1, 2, 3), 8)', '(1, 8, 3, 4, 8, 8, 9, 2), 8)', '(1, 2, 8, 5, 1, 2, 9), 8)']
+import re
+
+file = open('file3.txt', 'r', encoding='utf-8-sig')
+stopwords = file.read().split()
+string = '''Hello, world! Python IS the programming language of thE future. My EMAIL is....
+PYTHON is awesome!!!!'''
 
 
-def find_element(tple, element):
-    if tple.count(element) > 0:
-        start_index = tple.index(element)
-        end_index = tple.index(element, start_index + 1) if tple.count(element) > 1 else ()
-        return tple[start_index:end_index + 1] if end_index != () else tple[start_index:]
-    else:
-        return ()
+def censor_text(string, stopwords):
+    for stopword in stopwords:
+        string = re.sub(stopword, lambda x: '*' * len(x.group()), string, flags=re.IGNORECASE)
+    return string
 
-for tpl in tuples:
-    tple = tuple(map(int, tpl[1:-4].strip('()').split(',')))
-    element = int(tpl[-2])
-    new_tuple = find_element(tple, element)
-    print(new_tuple)
+
+res = censor_text(string, stopwords)
+print(res)
+
+file.close()
 ```
 
 ### Результат
@@ -159,25 +195,34 @@ for tpl in tuples:
 ![image](img/14.png)
   
 ## Самостоятельная работа №5
-Самостоятельно придумайте и решите задачу, в которой будут
-обязательно использоваться кортеж или список. Проведите
-минимум три теста для проверки работоспособности вашей задачи
+Программа будет считывать ФИО пользователя, считать кол-во символов без пробелов, выводить сумму символов в консоль и делать запись в файл output.txt
   
 ```python
-# В магазине продаются яблоки разных сортов.
-# На складе имеется информация о количестве яблок каждого сорта,
-# и их средней цене. Необходимо посчитать общую стоимость всех яблок на складе.
+def count_characters_without_spaces(full_name):
+    # Удаляем пробелы из строки и считаем количество символов
+    characters_count = len(full_name.replace(" ", ""))
+    return characters_count
 
-apples_info = [('Голден', 100), ('Сезонные', 50), ('Медовые', 75)] # Тип яблока и кол-во на складе
-apples_prices = {'Голден': 127, 'Сезонные': 79, 'Медовые': 98} # Тип яблока и средняя цена
 
-total_cost = 0
+def main():
+    # Запрос ФИО у пользователя
+    full_name = input("Введите ваше ФИО: ")
 
-for apple_type, counts in apples_info:
-    apple_price = apples_prices[apple_type]
-    total_cost += counts * apple_price
+    # Считаем количество символов без пробелов
+    characters_count = count_characters_without_spaces(full_name)
 
-print(f"Общая стоимость всех яблок на складе: {total_cost} рублей.")
+    # Выводим результат в консоль
+    print(f"Сумма символов в ФИО без пробелов: {characters_count}")
+
+    # Записываем результат в файл output.txt
+    with open("output.txt", "w", encoding="utf-8") as file:
+        file.write(f"ФИО: {full_name}\n")
+        file.write(f"Сумма символов без пробелов: {characters_count}")
+
+
+# Вызываем функцию main() для запуска программы
+if __name__ == "__main__":
+    main()
 ```
 
 ### Результат
