@@ -132,7 +132,7 @@ print(f'{text}\nДлина предложения - {length}\nГласных "a,
 Составьте программу, результатом которой будет данный вывод в
 консоль.
 
-![image](pic/4.png)
+![image](pic/console.png)
 
 ```python
 string = 'hello'
