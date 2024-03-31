@@ -35,8 +35,7 @@
 ![image](pic/2.3Create.png)
 
 ## 2.4. Подготовка файлов
-![image]()
-![image]()
+![image](pic/2.4Add.png)
 
 ## 2.5. Фиксация изменений
 ![image])
