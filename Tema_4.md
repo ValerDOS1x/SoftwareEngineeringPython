@@ -1,4 +1,4 @@
-![image](https://github.com/ValerDOS1x/SoftwareEngineeringPython/assets/52882788/f3f70e0f-345c-4362-ad86-3eac0cbc9e45)Отчет по Теме #4 выполнил:
+Отчет по Теме #4 выполнил:
 - Стаценко Валерий Олегович
 - ИНО ЗБ ПОАС-22-2
 
