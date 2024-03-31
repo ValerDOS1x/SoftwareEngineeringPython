@@ -57,17 +57,16 @@
 ![image](pic/2.10Observ.png)
 
 ## 2.11. Возвращение файла к предыдущему (определенному) состоянию
-![image]()
-![image]()
+![image](pic/2.11Checkout.png)
 
 ## 2.12. Возвращение к предыдущему коммиту
-![image]()
+![image](pic/2.12HardReset.png)
 
 ## 2.13. Исправление коммита
-![image]()
+![image](pic/2.13Amend.png)
 
 ## 2.14. Разрешение конфликтов при слиянии
-![image]()
+![image](pic/2.14Conflict.png)
 
 ## 2.15. Настройка .gitignore
-![image]()
+![image](pic/2.15gitignore.png)
