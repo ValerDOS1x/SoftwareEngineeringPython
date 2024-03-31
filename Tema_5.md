@@ -32,35 +32,18 @@
 консоль, в котором будет указана вся необходимая информация.
 
 ```python
-from datetime import datetime
-from math import sqrt
-def main(**kwargs):
-    """
-    result - Возвращает квадратный корень суммы квадратов двух элементов кортежей
+bills = [8734, 2345, 8201, 6621, 9999, 1234, 5678, 8201, 8888, 4321, 3365, 1478, 9865, 5555,
+         7777, 9998, 1111, 2222, 3333, 4444, 5556, 6666, 5410, 7778, 8889, 4445, 1439, 9604,
+         8201, 3365, 7502, 3016, 4928, 5837, 8201, 2643, 5017, 9682, 8530, 3250, 7193, 9051,
+         4506, 1987, 3365, 5410, 7168, 7777, 9865, 5678, 8201, 4445, 3016, 4506, 4506]
 
-    :param kwargs: Принимаемые кортежи
+bills_count = len(bills)
+different_guests = len(set(bills))
+frequent_guest = max(bills, key=bills.count)
 
-    :rtype: float
-    :return: Печатает result в консоли
-    """
-    for key in kwargs.items():
-        result = sqrt(key[1][0] ** 2 + key[1][1] ** 2)
-        print(result)
-if __name__ == '__main__':  # точка входа
-    start_time = datetime.now()  # фиксация начала времени
-
-    # запуск функции main и передача параметров kwargs
-    main(
-        one=[10, 3],
-        two=[5, 4],
-        three=[15, 13],
-        four=[93, 53],
-        five=[133, 15]
-    )
-    # подсчёт сколько времени заняло выполнение программы. Сейчас - начало времени
-    time_costs = datetime.now() - start_time
-    # Выводит в консоль сколько времени выполнялась программа
-    print(f"Время выполнения программы - {time_costs}")
+print(f'Количество чеков: {bills_count}\n'
+      f'Число уникальных гостей: {different_guests}\n'
+      f'Самый частый гость: {frequent_guest}')
 ```
 
 ### Результат
@@ -81,22 +64,19 @@ if __name__ == '__main__':  # точка входа
 консоль, в котором будет указана вся необходимая информация.
 
 ```python
-import random
+results = [10.2, 14.8, 19.3, 22.7, 12.5, 33.1, 38.9, 21.6, 26.4, 17.1, 30.2, 35.7, 16.9,
+           27.8, 24.5, 16.3, 18.7, 31.9, 12.9, 37.4]
 
+results.sort()
+best_three = results[-3:]
+worst_three = results[:3]
+from_ten = results
 
-def dice():
-    roll = random.randrange(1, 6)
-    print(f'Выпало - {roll}')
-    if roll >= 5:
-        print('Вы победили')
-    elif 3 <= roll <= 4:
-        dice()
-    elif 1 <= roll <= 2:
-        print('Вы проиграли')
-
-
-if __name__ == '__main__':
-    dice()
+print(
+    f'Топ-3 лучших результата: {best_three}\n'
+    f'Топ-3 худших результата: {worst_three}\n'
+    f'Все результаты начиная с 10-ти: {from_ten}'
+    )
 ```
 
 ### Результат
@@ -116,20 +96,24 @@ two = [5, 18, 40, 62, 98]
 three = [4, 21, 37, 56, 84]
 
 ```python
-from datetime import datetime as dt
-import time as t
+from math import sqrt
+
+list = [[12, 25, 3, 48, 71], [5, 18, 40, 62, 98], [4, 21, 37, 56, 84]]
+max_triangle = []
+min_triangle = []
 
 
-def time(start):
-    print(dt.now().time())
-    return dt.now().time().second - start
+def count_area(a, b, c):
+    p = (a + b + c) / 2
+    s = sqrt(p * (p - a) * (p - b) * (p - c))
+    return s
 
 
-sec = 0
-time_start = dt.now().time().second
-while sec <= 5:
-    t.sleep(1)
-    sec = time(time_start)
+for partOfList in list:
+    max_triangle.append(max(partOfList))
+    min_triangle.append(min(partOfList))
+
+print(f'S наибольшего равна {count_area(*max_triangle)}\nS наименьшего равна {count_area(*min_triangle)}')
 ```
 
   ### Результат
@@ -149,20 +133,20 @@ while sec <= 5:
 консоль, в котором будут три обновленных массива.
   
 ```python
-def mean(data):
-    return sum(data) / float(len(data))
+rating = [
+    [2, 3, 4, 5, 3, 4, 5, 2, 2, 5, 3, 4, 3, 5, 4],
+    [4, 2, 3, 5, 3, 5, 4, 2, 2, 5, 4, 3, 5, 3, 4],
+    [5, 4, 3, 3, 4, 3, 3, 5, 5, 3, 3, 3, 3, 4, 4]
+]
 
 
-def main(**kwargs):
-    for i, j in kwargs.items():
-        print(f"{i}) Среднее арифметическое = {mean(j)}")
+def correction_grades(grades):
+    new_grades = [4 if i == 3 else i for i in grades if i != 2]
+    print(f'Исправленные оценки:', *new_grades, sep='\n')
 
 
 if __name__ == '__main__':
-    main(
-        a=[2, 8, 6],
-        b=[3, 5, 7, 9]
-    )
+    correction_grades(rating)
 ```
 
 ### Результат
@@ -187,25 +171,21 @@ list_3 = [2, 2, 1, 2, 2, 5, 6, 7, 1, 3, 2, 2]
 {'11', 1, 3, 2, 5, 6, '222222', '222', 7, '2222', '22222', '22'}
   
 ```python
-import two as m
-
-a = int(input('A = '))
-b = int(input('B = '))
-c = int(input('C = '))
-
-print('S =', m.triangle(a, b, c))
-```
-```python
-from math import sqrt
+lists = [[1, 1, 3, 3, 1], [5, 5, 5, 5, 5, 5, 5], [2, 2, 1, 2, 2, 5, 6, 7, 1, 3, 2, 2]]
 
 
-def triangle(a, b, c):
-    p = (a+b+c)/2
-    return sqrt(p*(p-a)*(p-b)*(p-c))
+def convert_to_set(list, setl):
+    for i in range(len(list)):
+        if list[:i + 1].count(list[i]) != 1:
+            setl.add(str(list[i]) * list[:i + 1].count(list[i]))
+    return setl
+
+
+for l in lists:
+    setl = set(l)
+    print(convert_to_set(l, setl))
 ```
 
 ### Результат
 
 ![image](pic/5.png)
-![image](pic/5.1.png)
-
