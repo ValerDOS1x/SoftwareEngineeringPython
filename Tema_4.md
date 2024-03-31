@@ -156,7 +156,7 @@ if __name__ == '__main__':
 выведите в консоль полученную площадь.
   
 ```python
-import S5_module as m
+import two as m
 
 a = int(input('A = '))
 b = int(input('B = '))
