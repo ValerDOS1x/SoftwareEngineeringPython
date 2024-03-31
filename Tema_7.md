@@ -199,28 +199,21 @@ file.close()
   
 ```python
 def count_characters_without_spaces(full_name):
-    # Удаляем пробелы из строки и считаем количество символов
     characters_count = len(full_name.replace(" ", ""))
     return characters_count
 
 
 def main():
-    # Запрос ФИО у пользователя
     full_name = input("Введите ваше ФИО: ")
 
-    # Считаем количество символов без пробелов
     characters_count = count_characters_without_spaces(full_name)
 
-    # Выводим результат в консоль
     print(f"Сумма символов в ФИО без пробелов: {characters_count}")
 
-    # Записываем результат в файл output.txt
     with open("output.txt", "w", encoding="utf-8") as file:
         file.write(f"ФИО: {full_name}\n")
         file.write(f"Сумма символов без пробелов: {characters_count}")
 
-
-# Вызываем функцию main() для запуска программы
 if __name__ == "__main__":
     main()
 ```
